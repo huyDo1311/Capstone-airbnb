@@ -10,14 +10,16 @@ datasource db {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model BinhLuan {
   id                 Int        @id @default(autoincrement())
-  ma_cong_viec       Int?
+  ma_phong           Int?
   ma_nguoi_binh_luan Int?
   ngay_binh_luan     DateTime   @db.DateTime(0)
   noi_dung           String?    @db.VarChar(500)
   sao_binh_luan      Int?
-  NguoiDung          NguoiDung? @relation(fields: [ma_nguoi_binh_luan], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "BinhLuan_ibfk_1")
+  Phong              Phong?     @relation(fields: [ma_phong], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "BinhLuan_Phong_FK")
+  NguoiDung          NguoiDung? @relation(fields: [ma_nguoi_binh_luan], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "BinhLuan_NguoiDung_FK")
 
   @@index([ma_nguoi_binh_luan], map: "ma_nguoi_binh_luan")
+  @@index([ma_phong], map: "ma_phong")
 }
 
 model DatPhong {
@@ -67,6 +69,7 @@ model Phong {
   ban_ui    Boolean?   @default(false)
   hinh_anh  String?    @db.VarChar(255)
   ma_vi_tri Int?
+  BinhLuan  BinhLuan[]
   DatPhong  DatPhong[]
   ViTri     ViTri?     @relation(fields: [ma_vi_tri], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Phong_ibfk_1")
 

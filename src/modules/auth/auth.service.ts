@@ -47,20 +47,19 @@ export class AuthService {
       },
     });
 
-    const tokens = this.createTokens(newUser.id);
-
     return {
-      message: 'Đăng ký thành công',
-      user: {
+      statusCode: 200,
+      content: {
         id: newUser.id,
         name: newUser.name,
         email: newUser.email,
+        password: password,
         phone: newUser.phone,
         birthday: newUser.birth_day,
+        avatar: null,
         gender: newUser.gender,
         role: newUser.role,
       },
-      tokens,
     };
   }
 

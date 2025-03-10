@@ -9,10 +9,21 @@ import { UsersModule } from './modules/users/users.module';
 import { RoomsModule } from './modules/rooms/rooms.module';
 import { LocationsModule } from './modules/locations/locations.module';
 import PrismaModule from './modules/prisma/prisma.module';
+import { CheckTokenStrategy } from './modules/auth/token/token-strategy';
+import { CheckPermissionStrategy } from './modules/auth/permission/permission-strategy';
 
 @Module({
-  imports: [ConfigModule.forRoot(),PrismaModule, AuthModule, CommentsModule, BookingsModule, UsersModule, RoomsModule, LocationsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    PrismaModule,
+    AuthModule,
+    CommentsModule,
+    BookingsModule,
+    UsersModule,
+    RoomsModule,
+    LocationsModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CheckTokenStrategy, CheckPermissionStrategy],
 })
 export class AppModule {}

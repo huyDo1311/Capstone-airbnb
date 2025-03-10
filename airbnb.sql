@@ -62,11 +62,12 @@ CREATE TABLE DatPhong (
 -- Tạo bảng BinhLuan
 CREATE TABLE BinhLuan (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    ma_cong_viec INT,
+    ma_phong INT,  -- Liên kết với bảng Phong
     ma_nguoi_binh_luan INT,
     ngay_binh_luan DATETIME NOT NULL,
     noi_dung VARCHAR(500),
     sao_binh_luan INT CHECK (sao_binh_luan BETWEEN 1 AND 5),
+    FOREIGN KEY (ma_phong) REFERENCES Phong(id),  -- Thiết lập liên kết đúng
     FOREIGN KEY (ma_nguoi_binh_luan) REFERENCES NguoiDung(id)
 );
 
@@ -124,7 +125,7 @@ INSERT INTO DatPhong (ma_phong, ngay_den, ngay_di, so_luong_khach, ma_nguoi_dat)
 (10, '2025-08-15', '2025-08-18', 2, 10);
 
 -- Chèn dữ liệu vào bảng BinhLuan
-INSERT INTO BinhLuan (ma_cong_viec, ma_nguoi_binh_luan, ngay_binh_luan, noi_dung, sao_binh_luan) VALUES
+INSERT INTO BinhLuan (ma_phong, ma_nguoi_binh_luan, ngay_binh_luan, noi_dung, sao_binh_luan) VALUES
 (1, 1, '2025-04-06', 'Phòng rất sạch sẽ và tiện nghi', 5),
 (2, 2, '2025-04-16', 'Rất phù hợp cho gia đình', 4),
 (3, 3, '2025-05-04', 'Giá cả hợp lý, sẽ quay lại', 4),
@@ -135,3 +136,4 @@ INSERT INTO BinhLuan (ma_cong_viec, ma_nguoi_binh_luan, ngay_binh_luan, noi_dung
 (8, 8, '2025-07-13', 'Vườn rất đẹp, đáng tiền', 4),
 (9, 9, '2025-08-06', 'Căn hộ cao cấp, dịch vụ tốt', 5),
 (10, 10, '2025-08-19', 'Bungalow rất chill, gần gũi thiên nhiên', 5);
+
