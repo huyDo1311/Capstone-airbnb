@@ -34,6 +34,7 @@ export class AuthService {
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
+    // console.log({hashedPassword});
 
     const newUser = await this.prisma.nguoiDung.create({
       data: {

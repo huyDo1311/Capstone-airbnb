@@ -11,9 +11,14 @@ import { LocationsModule } from './modules/locations/locations.module';
 import PrismaModule from './modules/prisma/prisma.module';
 import { CheckTokenStrategy } from './modules/auth/token/token-strategy';
 import { CheckPermissionStrategy } from './modules/auth/permission/permission-strategy';
+import {ServeStaticModule} from '@nestjs/serve-static';
+import {join} from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..'),
+    }),
     ConfigModule.forRoot(),
     PrismaModule,
     AuthModule,
@@ -21,7 +26,7 @@ import { CheckPermissionStrategy } from './modules/auth/permission/permission-st
     BookingsModule,
     UsersModule,
     RoomsModule,
-    LocationsModule,
+    LocationsModule
   ],
   controllers: [AppController],
   providers: [AppService, CheckTokenStrategy, CheckPermissionStrategy],

@@ -11,7 +11,9 @@ CREATE TABLE NguoiDung (
     phone VARCHAR(20),
     birth_day VARCHAR(50),
     gender VARCHAR(10),
-    role VARCHAR(50)
+    role VARCHAR(50),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Thời gian tạo
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Thời gian cập nhật
 );
 
 -- Tạo bảng ViTri
@@ -44,7 +46,9 @@ CREATE TABLE Phong (
     ban_ui BOOLEAN DEFAULT FALSE,
     hinh_anh VARCHAR(255),
     ma_vi_tri INT,
-    FOREIGN KEY (ma_vi_tri) REFERENCES ViTri(id)
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (ma_vi_tri) REFERENCES ViTri(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Tạo bảng DatPhong
@@ -55,20 +59,24 @@ CREATE TABLE DatPhong (
     ngay_di DATETIME NOT NULL,
     so_luong_khach INT NOT NULL,
     ma_nguoi_dat INT,
-    FOREIGN KEY (ma_phong) REFERENCES Phong(id),
-    FOREIGN KEY (ma_nguoi_dat) REFERENCES NguoiDung(id)
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (ma_phong) REFERENCES Phong(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (ma_nguoi_dat) REFERENCES NguoiDung(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Tạo bảng BinhLuan
 CREATE TABLE BinhLuan (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    ma_phong INT,  -- Liên kết với bảng Phong
+    ma_phong INT,  
     ma_nguoi_binh_luan INT,
     ngay_binh_luan DATETIME NOT NULL,
     noi_dung VARCHAR(500),
     sao_binh_luan INT CHECK (sao_binh_luan BETWEEN 1 AND 5),
-    FOREIGN KEY (ma_phong) REFERENCES Phong(id),  -- Thiết lập liên kết đúng
-    FOREIGN KEY (ma_nguoi_binh_luan) REFERENCES NguoiDung(id)
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (ma_phong) REFERENCES Phong(id) ON DELETE CASCADE ON UPDATE CASCADE,  
+    FOREIGN KEY (ma_nguoi_binh_luan) REFERENCES NguoiDung(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
