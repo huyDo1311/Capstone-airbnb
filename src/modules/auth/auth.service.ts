@@ -74,7 +74,6 @@ export class AuthService {
     });
 
     // const passHash = bcrypt.hashSync(pass_word, 10)
-
     // console.log({passHash})
 
     if (!userExists) {

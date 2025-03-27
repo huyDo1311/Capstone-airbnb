@@ -22,7 +22,9 @@ CREATE TABLE ViTri (
     ten_vi_tri VARCHAR(255) NOT NULL,
     tinh_thanh VARCHAR(255),
     quoc_gia VARCHAR(255),
-    hinh_anh VARCHAR(255)
+    hinh_anh VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Thời gian tạo
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Thời gian cập nhật
 );
 
 -- Tạo bảng Phong

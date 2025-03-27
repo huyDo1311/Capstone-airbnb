@@ -85,10 +85,12 @@ model Phong {
 }
 
 model ViTri {
-  id         Int     @id @default(autoincrement())
-  ten_vi_tri String  @db.VarChar(255)
-  tinh_thanh String? @db.VarChar(255)
-  quoc_gia   String? @db.VarChar(255)
-  hinh_anh   String? @db.VarChar(255)
+  id         Int       @id @default(autoincrement())
+  ten_vi_tri String    @db.VarChar(255)
+  tinh_thanh String?   @db.VarChar(255)
+  quoc_gia   String?   @db.VarChar(255)
+  hinh_anh   String?   @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.DateTime(0)
+  updated_at DateTime? @default(now()) @db.DateTime(0)
   Phong      Phong[]
 }
