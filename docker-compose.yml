@@ -5,8 +5,8 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: airbnb
+      MYSQL_ROOT_PASSWORD: cUdZaLFXKeOBdnkZNfANPaFroETRGdUa
+      MYSQL_DATABASE: railway
     ports:
       - "3306:3306"
     volumes:
@@ -17,7 +17,7 @@ services:
     depends_on:
       - mysql
     environment:
-      DATABASE_URL: mysql://root:root@mysql:3306/airbnb
+      DATABASE_URL: mysql://root:cUdZaLFXKeOBdnkZNfANPaFroETRGdUa@mysql.railway.internal:3306/railway
     ports:
       - "3000:3000"
 
