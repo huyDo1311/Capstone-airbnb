@@ -1,9 +1,22 @@
-version: '3'
+version: '3.8'
 services:
   mysql:
     image: mysql:latest
+    container_name: mysql_container
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: mydb
     ports:
       - "3307:3306"
+
+  nestjs:
+    build: .
+    container_name: nestjs_container
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      DATABASE_URL: "mysql://root:root@mysql:3306/mydb"
