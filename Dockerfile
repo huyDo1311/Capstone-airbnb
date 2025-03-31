@@ -34,7 +34,7 @@ COPY --from=builder /usr/src/app/dist ./dist
 # Copy file môi trường
 # COPY .env .env
 
-COPY prisma ./prisma
+RUN npx prisma db pull
 
 # Chạy Prisma migrations (nếu có)
 RUN npx prisma generate
