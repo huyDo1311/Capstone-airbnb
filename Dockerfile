@@ -1,27 +1,47 @@
-# Base image cho NestJS
-FROM node:22-alpine AS production
+# Sử dụng Node.js 22 với Alpine (nhẹ, tối ưu)
+FROM node:22-alpine AS builder
 
+# Thiết lập thư mục làm việc
 WORKDIR /usr/src/app
 
 # Copy package.json và cài đặt dependencies
 COPY package*.json ./
-RUN npm install --only=prod 
-# && npm rebuild bcrypt --build-from-source
-# Copy toàn bộ source code
+
+# Cài đặt NestJS CLI (nếu chưa có)
+RUN npm install && npm install -g @nestjs/cli
+
+# Copy toàn bộ mã nguồn
 COPY . .
 
 # Build ứng dụng
 RUN npm run build
 
-EXPOSE 3000
+# ----------------- #
+# Tạo production image
+# ----------------- #
+
+FROM node:22-alpine AS production
+
+WORKDIR /usr/src/app
+
+# Copy package.json và cài đặt dependencies (chỉ phần production)
+COPY package*.json ./
+RUN npm install --only=prod
+
+# Copy thư mục build từ builder stage
+COPY --from=builder /usr/src/app/dist ./dist
 
 # Copy file môi trường
 # COPY .env .env
 
-# Chạy Prisma migrations (nếu sử dụng Prisma)
+# Chạy Prisma migrations (nếu có)
 RUN npx prisma generate
 
-CMD ["node", "dist/main"]
+# Expose cổng 3000
+EXPOSE 3000
+
+# Chạy ứng dụng
+CMD ["node", "dist/main.js"]
 
 
 
@@ -29,39 +49,33 @@ CMD ["node", "dist/main"]
 
 
 
-# FROM node:22-alpine AS development
 
-# WORKDIR /usr/src/app
-
-# COPY package*.json ./
-
-# RUN npm install
-
-# COPY . . 
-
-# RUN npm run build
-
+# # Base image cho NestJS
 # FROM node:22-alpine AS production
 
-# ARG NODE_ENV=production
-# ENV NODE_ENV=${NODE_ENV}
-
 # WORKDIR /usr/src/app
 
+# # Copy package.json và cài đặt dependencies
 # COPY package*.json ./
-
-# RUN npm install --only=prod
-
+# RUN npm install --only=prod 
+# # && npm rebuild bcrypt --build-from-source
+# # Copy toàn bộ source code
 # COPY . .
 
-# COPY --from=development /usr/src/app/dist ./dist
+# # Build ứng dụng
+# RUN npm run build
 
-# COPY .env .env
+# EXPOSE 3000
 
+# # Copy file môi trường
+# # COPY .env .env
+
+# # Chạy Prisma migrations (nếu sử dụng Prisma)
 # RUN npx prisma generate
 
-# RUN npx prisma migrate deploy
-
-
-
 # CMD ["node", "dist/main"]
+
+
+
+
+
