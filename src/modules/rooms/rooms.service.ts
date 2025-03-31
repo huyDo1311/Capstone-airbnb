@@ -1,4 +1,3 @@
-import { Phong } from './../../../node_modules/.prisma/client/index.d';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
@@ -111,14 +110,12 @@ export class RoomsService {
 
   async getPaginated(query: any) {
     let { page, pageSize, type_id, search } = query;
-    console.log({ page, pageSize, type_id, search });
 
     page = Number(page) > 0 ? Number(page) : 1;
     pageSize = Number(pageSize) > 0 ? Number(pageSize) : 10;
     type_id = Number(type_id) > 0 ? Number(type_id) : 0;
     search = search?.trim() || '';
 
-    console.log({ page, pageSize, type_id, search });
 
     const whereCondition: any = {
       ...(type_id !== 0 && { type_id }),
