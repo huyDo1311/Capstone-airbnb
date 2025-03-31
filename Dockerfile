@@ -39,8 +39,6 @@ COPY --from=builder /usr/src/app/dist ./dist
 # Chạy Prisma migrations (nếu có)
 RUN npx prisma generate
 
-# Expose cổng 3000
-EXPOSE 3000
 
 # Chạy ứng dụng
 CMD ["node", "dist/main.js"]
