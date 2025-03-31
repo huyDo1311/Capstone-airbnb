@@ -10,6 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   console.log(process.env.PORT);
+  console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
   const reflector = app.get(Reflector);
   app.useGlobalPipes(new ValidationPipe());
