@@ -2,22 +2,24 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql:latest
-    container_name: mysql_container
+    image: mysql:8.0
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mydb
+      MYSQL_DATABASE: airbnb
     ports:
-      - "3307:3306"
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
 
-  nestjs:
+  app:
     build: .
-    container_name: nestjs_container
-    restart: always
-    ports:
-      - "3069:3069"
     depends_on:
       - mysql
     environment:
-      DATABASE_URL: "mysql://root:1234@mysql:3306/airbnb"
+      DATABASE_URL: mysql://root:root@mysql:3306/airbnb
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysql_data:
