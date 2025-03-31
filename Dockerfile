@@ -34,7 +34,11 @@ COPY --from=builder /usr/src/app/dist ./dist
 # Copy file môi trường
 # COPY .env .env
 
-# RUN npx prisma db pull
+# 🛠 Copy thư mục prisma vào container
+COPY --from=builder /usr/src/app/prisma ./prisma
+
+# Kiểm tra file schema.prisma có tồn tại không
+RUN ls -l ./prisma
 
 # Chạy Prisma migrations (nếu có)
 RUN npx prisma generate
